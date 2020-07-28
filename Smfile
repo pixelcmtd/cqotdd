@@ -1,0 +1,14 @@
+all {
+        %CC tcp tcp.c
+}
+
+clean {
+        !rm tcp
+}
+
+test root (all) {
+        !./tcp "This is a test purely intended to test." &
+        !echo -e \n | nc localhost 17
+        # this is a really ugly workaround, but it works
+        !kill $(ps ax | grep tcp | head -n 1 | cut -d' ' -f1)
+}
