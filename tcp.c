@@ -18,12 +18,13 @@ int main(int argc, char **argv)
         int sockfd, len, connfd;
         struct sockaddr_in servaddr;
         struct sockaddr client;
-        char *quote;
+        char quote[512];
 
         if (argc < 2) fail("no quote passed", -1);
-        quote = argv[1];
-        len = strlen(quote);
+        len = strlen(argv[1]);
         if (len > 511) fail("quote too long (max 511 bytes)", -2);
+        memcpy(quote, argv[1], len);
+        quote[len++] = '\n';
 
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
         if (sockfd == -1) fail("socket creation failed...", 1);
@@ -42,7 +43,6 @@ int main(int argc, char **argv)
                 connfd = accept(sockfd, &client, &socklen);
                 if (connfd < 0) fail("accept failed...", 4);
                 swr(connfd, quote, len);
-                swr(connfd, newline, 1);
                 close(connfd);
         }
 }
