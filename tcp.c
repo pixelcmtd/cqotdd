@@ -13,28 +13,17 @@
 socklen_t socklen = sizeof(struct sockaddr_in);
 char newline[1] = { '\n' };
 
-void handle(int sockfd, char *quote)
-{
-    int len, connfd;
-    struct sockaddr client;
-    len = strlen(quote);
-    for (;;) {
-        connfd = accept(sockfd, &client, &socklen);
-        if (connfd < 0) fail("accept failed...", 4);
-        swr(connfd, quote, len);
-        swr(connfd, newline, 1);
-        close(connfd); 
-    }
-}
-
 int main(int argc, char **argv)
 {
-        int sockfd;
+        int sockfd, len, connfd;
         struct sockaddr_in servaddr;
+        struct sockaddr client;
         char *quote;
 
-        if(argc < 2) fail("no quote passed", -1);
+        if (argc < 2) fail("no quote passed", -1);
         quote = argv[1];
+        len = strlen(quote);
+        if (len > 511) fail("quote too long (max 511 bytes)", -2);
 
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
         if (sockfd == -1) fail("socket creation failed...", 1);
@@ -49,5 +38,11 @@ int main(int argc, char **argv)
 
         if (listen(sockfd, 5)) fail("Listen failed...", 3);
 
-        handle(sockfd, quote);
-} 
+        for (;;) {
+                connfd = accept(sockfd, &client, &socklen);
+                if (connfd < 0) fail("accept failed...", 4);
+                swr(connfd, quote, len);
+                swr(connfd, newline, 1);
+                close(connfd);
+        }
+}
