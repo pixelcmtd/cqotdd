@@ -7,27 +7,6 @@ clean {
         !rm -f tcp udp
 }
 
-test_tcp root (all) {
-        !./tcp "This is a test purely intended to test." &
-        !sleep 0.2
-        !echo -e \n | nc localhost 17
-        # this is a really ugly workaround, but it works
-        !kill $(ps ax | grep tcp | grep -v grep | grep -v sm | head -n 1 | cut -d' ' -f1)
-}
-
-test_udp root (all) {
-        !./udp "This is a test purely intended to test." &
-        !sleep 0.2
-        !echo -e bzumbzumbrekekeke\n | nc -u localhost 17 &
-        !sleep 0.2
-        !killall nc
-        # this is a really ugly workaround, but it works
-        !kill $(ps ax | grep udp | grep -v grep | grep -v sm | head -n 1 | cut -d' ' -f1)
-}
-
-test root (test_tcp test_udp) {}
-
-run root (all) {
-        !./tcp "This is a demo message." &
-        !./udp "This is a demo message." &
+test root (all) {
+        !python3 test.py
 }
