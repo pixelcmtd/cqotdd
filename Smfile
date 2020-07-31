@@ -1,10 +1,10 @@
 all {
-        %CC tcp tcp.c
-        %CC udp udp.c
+        %CC cqotdd-tcp tcp.c
+        %CC cqotdd-udp udp.c
 }
 
 clean {
-        !rm -f tcp udp
+        !rm -f cqotdd-tcp cqotdd-udp
 }
 
 test root (all) {

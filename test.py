@@ -3,8 +3,8 @@
 from subprocess import Popen
 from socket import *
 
-tcp = Popen(['./tcp', 'This is a test purely intended to test.'])
-udp = Popen(['./udp', 'This is a test purely intended to test.'])
+tcp = Popen(['./cqotdd-tcp', 'This is a test purely intended to test.'])
+udp = Popen(['./cqotdd-udp', 'This is a test purely intended to test.'])
 
 sock = socket(AF_INET, SOCK_STREAM)
 sock.connect(('127.0.0.1', 17))
