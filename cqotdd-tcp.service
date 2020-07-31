@@ -1,0 +1,10 @@
+[Unit]
+Description=QOTD over TCP implementation
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/cqotdd-tcp
+
+[Install]
+WantedBy=multi-user.target

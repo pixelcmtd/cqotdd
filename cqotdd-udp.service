@@ -1,0 +1,10 @@
+[Unit]
+Description=QOTD over UDP implementation
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/cqotdd-udp
+
+[Install]
+WantedBy=multi-user.target
