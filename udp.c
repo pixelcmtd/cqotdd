@@ -10,7 +10,7 @@
 #define swr(f, b, l) if (write(f, b, l) == -1) \
         printf("[warning] write fail: %s\n", strerror(errno))
 
-socklen_t socklen_in = sizeof(struct sockaddr_in);
+#define socklen_in sizeof(struct sockaddr_in)
 socklen_t socklen = sizeof(struct sockaddr);
 
 int main(int argc, char **argv)

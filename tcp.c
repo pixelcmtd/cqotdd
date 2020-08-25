@@ -11,7 +11,6 @@
         printf("[warning] write fail: %s\n", strerror(errno))
 
 socklen_t socklen = sizeof(struct sockaddr_in);
-char newline[1] = { '\n' };
 
 int main(int argc, char **argv)
 {
