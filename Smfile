@@ -10,7 +10,8 @@ clean {
 install root (all) {
         !cp -f cqotdd-tcp /usr/local/bin/cqotdd-tcp
         !cp -f cqotdd-udp /usr/local/bin/cqotdd-udp
-        ![ "$(cat /proc/1/comm)" = "systemd" ] && { cp cqotdd-tcp.service /etc/systemd/system/cqotdd-tcp.service ; cp cqotdd-udp.service /etc/systemd/system/cqotdd-udp.service ; }
+        !cp -f cqotdd-tcp.service /etc/systemd/system/cqotdd-tcp.service
+        !cp -f cqotdd-udp.service /etc/systemd/system/cqotdd-udp.service
 }
 
 test root (all) {
