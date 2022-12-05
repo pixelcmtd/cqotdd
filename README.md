@@ -1,17 +1,21 @@
 # cqotdd
+
 The C QOTD Deamon is an implementation of the QOTD protocol.
 
 ## Building
+
 ```sh
-$ sm
+make -j2
 ```
 
-## Installing (Linux only)
+## Installing on systemd Linux
+
 ```sh
-$ sm install
+sudo make install
 ```
 
 ## Installing without cloning
+
 ```sh
-$ netsh -c -C 'sm install' chrissxYT/cqotdd
+netsh -c -C 'sudo make install' pixelcmtd/cqotdd
 ```
