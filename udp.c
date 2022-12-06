@@ -37,7 +37,8 @@ int main(int argc, char **argv)
                 fail("socket bind failed...", 2);
 
         for (;;) {
-                maxlen = recvfrom(sockfd, buf, 512,
+                socklen = sizeof(struct sockaddr);
+                maxlen = recvfrom(sockfd, buf, sizeof(buf),
                                   0, &client, &socklen);
                 if (maxlen < 0) printf("[warning] recv fail: %s\n",
                                        strerror(errno));
