@@ -40,8 +40,10 @@ int main(int argc, char **argv)
                 socklen = sizeof(struct sockaddr);
                 maxlen = recvfrom(sockfd, buf, sizeof(buf),
                                   0, &client, &socklen);
-                if (maxlen < 0) printf("[warning] recv fail: %s\n",
-                                       strerror(errno));
+                if (maxlen < 0) {
+                        fprintf(stderr, "[warning] recv fail: %s\n", strerror(errno));
+                        continue;
+                }
                 if (maxlen > len) maxlen = len + 1;
                 memcpy(buf, quote, maxlen - 1);
                 buf[maxlen - 1] = '\n';
