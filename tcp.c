@@ -6,14 +6,11 @@
 #include <unistd.h>
 #include <errno.h>
 
-#define fail(msg, cde) { puts(msg); exit(cde); }
-#define swr(f, b, l) if (write(f, b, l) == -1) \
-        printf("[warning] write fail: %s\n", strerror(errno))
+#define fail(msg, cde) { fputs(msg, stderr); exit(cde); }
 
 socklen_t socklen = sizeof(struct sockaddr_in);
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
         int sockfd, len, connfd;
         struct sockaddr_in servaddr;
         struct sockaddr client;
@@ -41,7 +38,8 @@ int main(int argc, char **argv)
         for (;;) {
                 connfd = accept(sockfd, &client, &socklen);
                 if (connfd < 0) fail("accept failed...", 4);
-                swr(connfd, quote, len);
+                if (write(connfd, quote, len) == -1)
+                        fprintf(stderr, "[warning] write fail: %s\n", strerror(errno));
                 close(connfd);
         }
 }

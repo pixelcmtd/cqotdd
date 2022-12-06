@@ -6,15 +6,13 @@
 #include <unistd.h>
 #include <errno.h>
 
-#define fail(msg, cde) { puts(msg); exit(cde); }
+#define fail(msg, cde) { fputs(msg, stderr); exit(cde); }
 #define swr(f, b, l) if (write(f, b, l) == -1) \
         printf("[warning] write fail: %s\n", strerror(errno))
 
-#define socklen_in sizeof(struct sockaddr_in)
 socklen_t socklen = sizeof(struct sockaddr);
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
         int sockfd, len, maxlen;
         struct sockaddr_in servaddr;
         struct sockaddr client;
@@ -33,7 +31,7 @@ int main(int argc, char **argv)
         servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
         servaddr.sin_port = htons(17);
 
-        if (bind(sockfd, (struct sockaddr *)&servaddr, socklen_in))
+        if (bind(sockfd, (struct sockaddr *)&servaddr, sizeof(struct sockaddr_in)))
                 fail("socket bind failed...", 2);
 
         for (;;) {
